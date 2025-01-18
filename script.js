@@ -168,7 +168,7 @@ async function mostrarPuntos() {
     
     if(contador==0){
         puntosHtml += `
-            <p><span class="nombre-grande-g">Crack: ${usuario.nombre}</span>: ${usuario.puntos} puntos</p>
+            <p><span class="nombre-grande-g">Crack: </span><span class="nombre-grande">${usuario.nombre}</span>: ${usuario.puntos} puntos</p>
         `;
         contador=contador+1;
     } else{
