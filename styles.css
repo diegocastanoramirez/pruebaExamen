@@ -32,3 +32,13 @@ input[type="text"], input[type="radio"] {
 button {
     margin-top: 10px;
 }
+.nombre-grande {
+    font-size: 18px;
+    font-weight: bold;
+}
+.nombre-grande-g{
+    font-size: 18px;
+    font-weight: bold;
+    color: #4CAF50;
+}
+
