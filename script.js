@@ -18,6 +18,7 @@ const form = document.getElementById('form-preguntas');
 const nombreInput = document.getElementById('nombre');
 const respuestaInputs = document.querySelectorAll('input[type="radio"]');
 const submitButton = form.querySelector('button[type="submit"]');
+const resultadosDiv = document.getElementById('resultados');
 
 // Temporizador
 const interval = setInterval(() => {
@@ -26,7 +27,7 @@ const interval = setInterval(() => {
     if (timeLeft <= 0) {
         clearInterval(interval);
         bloquearFormulario();
-        sendFormData();
+        sendFormData(); // Envía los datos automáticamente si el usuario no ha enviado el formulario.
     }
 }, 1000);
 
@@ -54,9 +55,15 @@ form.addEventListener('submit', async (e) => {
 
     await sendFormData();
     bloquearFormulario();
-    timerElement.textContent = '';
+    ocultarFormulario(); // Oculta el formulario
+    timerElement.textContent = ''; // Limpia el temporizador
     timerElement.style.display = 'none'; // Oculta el temporizador
 });
+
+// Ocultar formulario
+function ocultarFormulario() {
+    form.style.display = 'none'; // Oculta todo el formulario
+}
 
 // Guardar datos en Firebase
 async function sendFormData() {
@@ -73,8 +80,7 @@ async function sendFormData() {
 
     try {
         await db.collection('respuestas').add(data);
-        mostrarResultados(data);
-        form.reset();
+        mostrarResultados(data); // Muestra los resultados después de guardar
     } catch (error) {
         console.error('Error al enviar respuestas:', error);
     }
@@ -82,7 +88,6 @@ async function sendFormData() {
 
 // Mostrar resultados
 function mostrarResultados(data) {
-    const resultadosDiv = document.getElementById('resultados');
     const resultadoRespuestasDiv = document.getElementById('resultado-respuestas');
     let respuestasHtml = '';
 
@@ -101,7 +106,7 @@ function mostrarResultados(data) {
     });
 
     resultadoRespuestasDiv.innerHTML = respuestasHtml;
-    resultadosDiv.classList.remove('oculto');
+    resultadosDiv.classList.remove('oculto'); // Asegura que los resultados sean visibles
 }
 
 // Inicialmente deshabilitar respuestas y botón
