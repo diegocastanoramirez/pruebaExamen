@@ -20,6 +20,9 @@ const respuestaInputs = document.querySelectorAll('input[type="radio"]');
 const submitButton = form.querySelector('button[type="submit"]');
 const resultadosDiv = document.getElementById('resultados');
 
+// Inicialmente ocultar los resultados
+resultadosDiv.style.display = 'none';
+
 // Temporizador
 const interval = setInterval(() => {
     timeLeft--;
@@ -106,7 +109,7 @@ function mostrarResultados(data) {
     });
 
     resultadoRespuestasDiv.innerHTML = respuestasHtml;
-    resultadosDiv.classList.remove('oculto'); // Asegura que los resultados sean visibles
+    resultadosDiv.style.display = 'block'; // Muestra los resultados solo después de enviar
 }
 
 // Inicialmente deshabilitar respuestas y botón
