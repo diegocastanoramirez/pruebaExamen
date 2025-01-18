@@ -14,6 +14,12 @@ const db = firebase.firestore();
 
 let timeLeft = 30;
 const timerElement = document.getElementById('timer');
+const form = document.getElementById('form-preguntas');
+const nombreInput = document.getElementById('nombre');
+const respuestaInputs = document.querySelectorAll('input[type="radio"]');
+const submitButton = form.querySelector('button[type="submit"]');
+
+// Temporizador
 const interval = setInterval(() => {
     timeLeft--;
     timerElement.textContent = timeLeft;
@@ -24,6 +30,7 @@ const interval = setInterval(() => {
     }
 }, 1000);
 
+// Deshabilitar elementos del formulario
 function bloquearFormulario() {
     const formElements = document.querySelectorAll('#form-preguntas input, #form-preguntas button');
     formElements.forEach(element => element.disabled = true);
@@ -31,13 +38,27 @@ function bloquearFormulario() {
     timerElement.style.color = 'gray';
 }
 
-const form = document.getElementById('form-preguntas');
-form.addEventListener('submit', async (e) => {
-    e.preventDefault();
-    await sendFormData();
-    bloquearFormulario();
+// Verificar si el nombre está lleno para habilitar las respuestas
+nombreInput.addEventListener('input', () => {
+    const isNombreFilled = nombreInput.value.trim() !== '';
+    respuestaInputs.forEach(input => input.disabled = !isNombreFilled);
+    submitButton.disabled = !isNombreFilled; // Bloquea también el botón
 });
 
+// Enviar formulario
+form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+
+    // Deshabilitar inmediatamente el botón para evitar múltiples envíos
+    submitButton.disabled = true;
+
+    await sendFormData();
+    bloquearFormulario();
+    timerElement.textContent = '';
+    timerElement.style.display = 'none'; // Oculta el temporizador
+});
+
+// Guardar datos en Firebase
 async function sendFormData() {
     const data = {
         nombre: form.nombre.value || null,
@@ -59,6 +80,7 @@ async function sendFormData() {
     }
 }
 
+// Mostrar resultados
 function mostrarResultados(data) {
     const resultadosDiv = document.getElementById('resultados');
     const resultadoRespuestasDiv = document.getElementById('resultado-respuestas');
@@ -81,3 +103,7 @@ function mostrarResultados(data) {
     resultadoRespuestasDiv.innerHTML = respuestasHtml;
     resultadosDiv.classList.remove('oculto');
 }
+
+// Inicialmente deshabilitar respuestas y botón
+respuestaInputs.forEach(input => input.disabled = true);
+submitButton.disabled = true;
