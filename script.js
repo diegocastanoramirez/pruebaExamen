@@ -21,53 +21,151 @@ const respuestaInputs = document.querySelectorAll('input[type="radio"]');
 const submitButton = form.querySelector('button[type="submit"]');
 const resultadosDiv = document.getElementById('resultados');
 const puntosDiv = document.getElementById('puntos'); // Contenedor de puntos
+let contadorPreguntas = 0;
+
+const button = document.getElementById('disableButton');
+
+const DivPregunta1 = document.getElementById('Pregunta1');
+const DivPregunta2 = document.getElementById('Pregunta2');
+const DivPregunta3 = document.getElementById('Pregunta3');
+const DivPregunta4 = document.getElementById('Pregunta4');
+const DivPregunta5 = document.getElementById('Pregunta5');
+
+
 
 // Inicialmente ocultar los resultados y los puntos
 resultadosDiv.style.display = 'none';
 puntosDiv.style.display = 'none';
+
+DivPregunta1.style.display = 'none';
+DivPregunta2.style.display = 'none';
+DivPregunta3.style.display = 'none';
+DivPregunta4.style.display = 'none';
+DivPregunta5.style.display = 'none';
+
 
 // Temporizador
 const interval = setInterval(() => {
     timeLeft--;
     timerElement.textContent = timeLeft;
     if (timeLeft <= 0) {
-        clearInterval(interval);
+        // clearInterval(interval+10);
+        // interval = timeLeft+10;
+        timeLeft = 30;
         bloquearFormulario();
-        if (enviadoDesdeGuardar == 0){
-            sendFormData(); // Envía los datos automáticamente si el usuario no ha enviado el formulario.
+
+
+        // if (enviadoDesdeGuardar == 0){
+        //     sendFormData(); // Envía los datos automáticamente si el usuario no ha enviado el formulario.
+        // }
+        if(contadorPreguntas==0){
+            DivPregunta2.style.display = 'block'; 
+            DivPregunta1.style.display = 'none'; 
+    
+            contadorPreguntas = contadorPreguntas+1
+        }else if(contadorPreguntas==1){
+            DivPregunta2.style.display = 'none'; 
+            DivPregunta3.style.display = 'block'; 
+            contadorPreguntas = contadorPreguntas+1
+        } else if(contadorPreguntas==2){
+            DivPregunta3.style.display = 'none'; 
+            DivPregunta4.style.display = 'block'; 
+            contadorPreguntas = contadorPreguntas+1
+        }else if(contadorPreguntas==3){
+            DivPregunta4.style.display = 'none'; 
+            DivPregunta5.style.display = 'block'; 
+            contadorPreguntas = contadorPreguntas+1
+            submitButton.disabled = false;
+            button.disabled = true;
+            
+        }else if (contadorPreguntas==4){
+            DivPregunta5.style.display = 'none'
+            sendFormData();
+            clearInterval(interval);
+            timerElement.textContent = '¡Terminado!';
+            submitButton.disabled = true;
+            ocultarFormulario()
         }
-       
+    
+
+
+
+
     }
 }, 1000);
 
 // Deshabilitar elementos del formulario
 function bloquearFormulario() {
-    const formElements = document.querySelectorAll('#form-preguntas input, #form-preguntas button');
-    formElements.forEach(element => element.disabled = true);
-    timerElement.textContent = '¡Tiempo terminado!';
-    timerElement.style.color = 'gray';
+    // const formElements = document.querySelectorAll('#form-preguntas input, #form-preguntas button');
+    // formElements.forEach(element => element.disabled = true);
+    timerElement.textContent = '¡Siguiente pregunta!';
+    
+    // timerElement.style.color = 'gray';
 }
+// // Deshabilitar tiempo
+// function bloquearTiempo() {
+//     timerElement.textContent = '¡Terminado!';
+    
+ 
+// }
 
 // Verificar si el nombre está lleno para habilitar las respuestas
 nombreInput.addEventListener('input', () => {
     const isNombreFilled = nombreInput.value.trim() !== '';
     respuestaInputs.forEach(input => input.disabled = !isNombreFilled);
-    submitButton.disabled = !isNombreFilled; // Bloquea también el botón
+    // submitButton.disabled = !isNombreFilled; // Bloquea también el botón
+    button.disabled = false;
+    DivPregunta1.style.display = 'block';
+    timeLeft = 30;
+
 });
 
 // Enviar formulario
 form.addEventListener('submit', async (e) => {
-    e.preventDefault();
-     // para no permitir que se envie de nuevo cuando se acaba el tiempo
-    enviadoDesdeGuardar = 1
-    // Deshabilitar inmediatamente el botón para evitar múltiples envíos
-    submitButton.disabled = true;
 
-    await sendFormData();
-    bloquearFormulario();
-    ocultarFormulario(); // Oculta el formulario
-    timerElement.textContent = ''; // Limpia el temporizador
-    timerElement.style.display = 'none'; // Oculta el temporizador
+
+
+
+        e.preventDefault();
+        // para no permitir que se envie de nuevo cuando se acaba el tiempo
+       enviadoDesdeGuardar = 1
+       // Deshabilitar inmediatamente el botón para evitar múltiples envíos
+       submitButton.disabled = true;
+   
+       await sendFormData();
+       bloquearFormulario();
+       ocultarFormulario(); // Oculta el formulario
+       timerElement.textContent = ''; // Limpia el temporizador
+       timerElement.style.display = 'none'; // Oculta el temporizador
+
+
+});
+button.addEventListener('click', () => {
+    console.log('prueba');
+
+    timeLeft = 30;
+    if(contadorPreguntas==0){
+        DivPregunta2.style.display = 'block'; 
+        DivPregunta1.style.display = 'none'; 
+
+        contadorPreguntas = contadorPreguntas+1
+    }else if(contadorPreguntas==1){
+        DivPregunta2.style.display = 'none'; 
+        DivPregunta3.style.display = 'block'; 
+        contadorPreguntas = contadorPreguntas+1
+    } else if(contadorPreguntas==2){
+        DivPregunta3.style.display = 'none'; 
+        DivPregunta4.style.display = 'block'; 
+        contadorPreguntas = contadorPreguntas+1
+    }else if(contadorPreguntas==3){
+        DivPregunta4.style.display = 'none'; 
+        DivPregunta5.style.display = 'block'; 
+        contadorPreguntas = contadorPreguntas+1
+        submitButton.disabled = false;
+        button.disabled = true;
+    }
+
+
 });
 
 // Ocultar formulario
@@ -191,3 +289,4 @@ async function mostrarPuntos() {
 // Inicialmente deshabilitar respuestas y botón
 respuestaInputs.forEach(input => input.disabled = true);
 submitButton.disabled = true;
+button.disabled = true;
