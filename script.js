@@ -13,7 +13,7 @@ const app = firebase.initializeApp(firebaseConfig);
 const db = firebase.firestore();
 
 let enviadoDesdeGuardar = 0;
-let timeLeft = 30;
+let timeLeft = 400;
 const timerElement = document.getElementById('timer');
 const form = document.getElementById('form-preguntas');
 const nombreInput = document.getElementById('nombre');
@@ -51,7 +51,7 @@ const interval = setInterval(() => {
     if (timeLeft <= 0) {
         // clearInterval(interval+10);
         // interval = timeLeft+10;
-        timeLeft = 30;
+        timeLeft = 400;
         bloquearFormulario();
 
 
@@ -116,7 +116,7 @@ nombreInput.addEventListener('input', () => {
     // submitButton.disabled = !isNombreFilled; // Bloquea también el botón
     button.disabled = false;
     DivPregunta1.style.display = 'block';
-    timeLeft = 30;
+    timeLeft = 400;
 
 });
 
@@ -143,7 +143,7 @@ form.addEventListener('submit', async (e) => {
 button.addEventListener('click', () => {
     console.log('prueba');
 
-    timeLeft = 30;
+    timeLeft = 400;
     if(contadorPreguntas==0){
         DivPregunta2.style.display = 'block'; 
         DivPregunta1.style.display = 'none'; 
