@@ -316,7 +316,7 @@ button.disabled = true;
                     correcta: "Watch something fun."
                 },
                 {
-                    pregunta: 'How many vowels are in the word "journey"?',
+                    pregunta: 'How many vowels are in the word "nea"?',
                     respuestas: ["Two", "Three", "Four", "Five"],
                     correcta: "Three"
                 },
