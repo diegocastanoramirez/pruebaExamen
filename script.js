@@ -7,7 +7,7 @@ const firebaseConfig = {
     messagingSenderId: "968053681379",
     appId: "1:968053681379:web:fefdcf650d43f0102269d6",
     measurementId: "G-4YE9ERP1FR"
-};
+  };
 
 const app = firebase.initializeApp(firebaseConfig);
 const db = firebase.firestore();
@@ -25,11 +25,7 @@ let contadorPreguntas = 0;
 
 const button = document.getElementById('disableButton');
 
-const DivPregunta1 = document.getElementById('Pregunta1');
-const DivPregunta2 = document.getElementById('Pregunta2');
-const DivPregunta3 = document.getElementById('Pregunta3');
-const DivPregunta4 = document.getElementById('Pregunta4');
-const DivPregunta5 = document.getElementById('Pregunta5');
+const DivPreguntas = document.getElementById('preguntas-container');
 
 
 
@@ -37,11 +33,7 @@ const DivPregunta5 = document.getElementById('Pregunta5');
 resultadosDiv.style.display = 'none';
 puntosDiv.style.display = 'none';
 
-DivPregunta1.style.display = 'none';
-DivPregunta2.style.display = 'none';
-DivPregunta3.style.display = 'none';
-DivPregunta4.style.display = 'none';
-DivPregunta5.style.display = 'none';
+DivPreguntas.style.display = 'none';
 
 
 // Temporizador
@@ -53,7 +45,11 @@ const interval = setInterval(() => {
         // interval = timeLeft+10;
         timeLeft = 400;
         bloquearFormulario();
-
+        const DivPregunta1 = document.getElementById('Pregunta1');
+        const DivPregunta2 = document.getElementById('Pregunta2');
+        const DivPregunta3 = document.getElementById('Pregunta3');
+        const DivPregunta4 = document.getElementById('Pregunta4');
+        const DivPregunta5 = document.getElementById('Pregunta5');
 
         // if (enviadoDesdeGuardar == 0){
         //     sendFormData(); // Envía los datos automáticamente si el usuario no ha enviado el formulario.
@@ -63,6 +59,10 @@ const interval = setInterval(() => {
             DivPregunta1.style.display = 'none'; 
     
             contadorPreguntas = contadorPreguntas+1
+            DivPreguntas.style.display = 'block';
+
+
+            
         }else if(contadorPreguntas==1){
             DivPregunta2.style.display = 'none'; 
             DivPregunta3.style.display = 'block'; 
@@ -112,10 +112,12 @@ function bloquearFormulario() {
 // Verificar si el nombre está lleno para habilitar las respuestas
 nombreInput.addEventListener('input', () => {
     const isNombreFilled = nombreInput.value.trim() !== '';
+    const DivPregunta1 = document.getElementById('Pregunta1');
     respuestaInputs.forEach(input => input.disabled = !isNombreFilled);
     // submitButton.disabled = !isNombreFilled; // Bloquea también el botón
     button.disabled = false;
     DivPregunta1.style.display = 'block';
+    DivPreguntas.style.display = 'block';
     timeLeft = 400;
 
 });
@@ -144,11 +146,18 @@ button.addEventListener('click', () => {
     console.log('prueba');
 
     timeLeft = 400;
+          const DivPregunta1 = document.getElementById('Pregunta1');
+          const DivPregunta2 = document.getElementById('Pregunta2');
+          const DivPregunta3 = document.getElementById('Pregunta3');
+          const DivPregunta4 = document.getElementById('Pregunta4');
+          const DivPregunta5 = document.getElementById('Pregunta5');
     if(contadorPreguntas==0){
-        DivPregunta2.style.display = 'block'; 
-        DivPregunta1.style.display = 'none'; 
+          contadorPreguntas = contadorPreguntas+1
+          DivPreguntas.style.display = 'block';
+          DivPregunta2.style.display = 'block'; 
+          DivPregunta1.style.display = 'none'; 
 
-        contadorPreguntas = contadorPreguntas+1
+            
     }else if(contadorPreguntas==1){
         DivPregunta2.style.display = 'none'; 
         DivPregunta3.style.display = 'block'; 
@@ -290,3 +299,104 @@ async function mostrarPuntos() {
 respuestaInputs.forEach(input => input.disabled = true);
 submitButton.disabled = true;
 button.disabled = true;
+
+
+
+
+        document.addEventListener("DOMContentLoaded", function () {
+            const preguntas = [
+                {
+                    pregunta: "What is a common activity people do weekly?",
+                    respuestas: [
+                        "Review how to plant a tree.",
+                        "Say all right to everyone.",
+                        "Watch something fun.",
+                        "Go on a journey for thirty kilometers."
+                    ],
+                    correcta: "Watch something fun."
+                },
+                {
+                    pregunta: 'How many vowels are in the word "journey"?',
+                    respuestas: ["Two", "Three", "Four", "Five"],
+                    correcta: "Three"
+                },
+                {
+                    pregunta: "Who can rest on Saturdays and Sundays?",
+                    respuestas: [
+                        "Everyone with night shifts",
+                        "Everyone who works every day",
+                        "Everyone who works from Monday to Friday",
+                        "Everyone who works only on weekends"
+                    ],
+                    correcta: "Everyone who works from Monday to Friday"
+                },
+                {
+                    pregunta: "What could you say to someone who looks excited?",
+                    respuestas: [
+                        "How's it going?",
+                        "Tree!",
+                        "Twelve!",
+                        "Say something weekly!"
+                    ],
+                    correcta: "How's it going?"
+                },
+                {
+                    pregunta: "Who is the favorite uncle?",
+                    respuestas: ["Mauro", "Mauro", "Mauro", "Mauro"],
+                    correcta: "Mauro"
+                }
+            ];
+
+            function mezclarArray(array) {
+                return array.sort(() => Math.random() - 0.5);
+            }
+            function blockPreguntas() {
+                console.log('diegoooooo2')
+
+                const DivPregunta1 = document.getElementById('Pregunta1');
+                const DivPregunta2 = document.getElementById('Pregunta2');
+                const DivPregunta3 = document.getElementById('Pregunta3');
+                const DivPregunta4 = document.getElementById('Pregunta4');
+                const DivPregunta5 = document.getElementById('Pregunta5');
+
+                DivPregunta1.style.display = 'none';
+                DivPregunta2.style.display = 'none';
+                DivPregunta3.style.display = 'none';
+                DivPregunta4.style.display = 'none';
+                DivPregunta5.style.display = 'none';
+
+
+                
+                
+            }
+
+            function generarPreguntas() {
+                console.log('diegoooooo')
+                const contenedor = document.getElementById("preguntas-container");
+                contenedor.innerHTML = "";
+  
+                preguntas.forEach((pregunta, index) => {
+                    const div = document.createElement("div");
+                    div.id = `Pregunta${index + 1}`;
+                    div.innerHTML = `<label>${index + 1}. ${pregunta.pregunta}</label>`;
+
+                    let respuestasMezcladas = [...pregunta.respuestas];
+                    respuestasMezcladas = mezclarArray(respuestasMezcladas);
+
+                    const opcionesHTML = respuestasMezcladas.map((respuesta) => {
+                        const correcta = respuesta === pregunta.correcta ? "true" : "false";
+                        return `<label>
+                                    <input type="radio" name="respuesta${index + 1}" value="${respuesta}" data-correct="${correcta}" data-text="${respuesta}">
+                                    ${respuesta}
+                                </label>`;
+                    }).join("");
+                    
+
+                    div.innerHTML += `<div class="radio-group" id=${opcionesHTML}</div>`;
+                    contenedor.appendChild(div);
+                });
+                blockPreguntas()
+            }
+
+            generarPreguntas();
+        });

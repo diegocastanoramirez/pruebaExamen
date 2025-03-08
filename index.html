@@ -17,75 +17,22 @@
             <label for="nombre">Nombre:</label>
             <input type="text" id="nombre" name="nombre" required>
         </div>
-        
-        <!-- Pregunta 1 -->
-        <div id="Pregunta1">
-            <label>1. What is a common activity people do weekly?</label>
-            <div class="radio-group">
-                <label><input type="radio" name="respuesta1" value="A" data-text="Review how to plant a tree." data-correct="false"> Review how to plant a tree.</label>
-                <label><input type="radio" name="respuesta1" value="B" data-text="Say all right to everyone." data-correct="false"> Say "all right" to everyone.</label>
-                <label><input type="radio" name="respuesta1" value="C" data-text="Watch something fun." data-correct="true"> Watch something fun.</label>
-                <label><input type="radio" name="respuesta1" value="D" data-text="Go on a journey for thirty kilometers." data-correct="false"> Go on a journey for thirty kilometers.</label>
-            </div>
-        </div>
 
-        <!-- Pregunta 2 -->
-        <div id="Pregunta2">
-            <label>2. How many vowels are in the word "journey"?</label>
-            <div class="radio-group">
-                <label><input type="radio" name="respuesta2" value="A" data-text="Two" data-correct="false"> Two</label>
-                <label><input type="radio" name="respuesta2" value="B" data-text="Three" data-correct="true"> Three</label>
-                <label><input type="radio" name="respuesta2" value="C" data-text="Four" data-correct="false"> Four</label>
-                <label><input type="radio" name="respuesta2" value="D" data-text="Five" data-correct="false"> Five</label>
-            </div>
-        </div>
-
-        <!-- Pregunta 3 -->
-        <div id="Pregunta3">
-            <label>3. Who can rest on Saturdays and Sundays?</label>
-            <div class="radio-group">
-                <label><input type="radio" name="respuesta3" value="A" data-text="Everyone with night shifts" data-correct="false"> Everyone with night shifts</label>
-                <label><input type="radio" name="respuesta3" value="B" data-text="Everyone who works every day" data-correct="false"> Everyone who works every day</label>
-                <label><input type="radio" name="respuesta3" value="C" data-text="Everyone who works from Monday to Friday" data-correct="true"> Everyone who works from Monday to Friday</label>
-                <label><input type="radio" name="respuesta3" value="D" data-text="Everyone who works only on weekends" data-correct="false"> Everyone who works only on weekends</label>
-            </div>
-        </div>
-
-        <!-- Pregunta 4 -->
-        <div id="Pregunta4">
-            <label>4. What could you say to someone who looks excited?</label>
-            <div class="radio-group">
-                <label><input type="radio" name="respuesta4" value="A" data-text="How's it going" data-correct="true"> "How's it going?"</label>
-                <label><input type="radio" name="respuesta4" value="B" data-text="Tree!" data-correct="false"> "Tree!"</label>
-                <label><input type="radio" name="respuesta4" value="C" data-text="Twelve" data-correct="false"> "Twelve!"</label>
-                <label><input type="radio" name="respuesta4" value="D" data-text="Say something weekly" data-correct="false"> "Say something weekly!"</label>
-            </div>
-        </div>
-
-        <!-- Pregunta 5 -->
-        <div id="Pregunta5">
-            <label>5. who is the favorite uncle?</label>
-            <div class="radio-group">
-                <label><input type="radio" name="respuesta5" value="A" data-text="Mauro" data-correct="false"> Mauro</label>
-                <label><input type="radio" name="respuesta5" value="B" data-text="Mauro" data-correct="false"> Mauro</label>
-                <label><input type="radio" name="respuesta5" value="C" data-text="Mauro" data-correct="false"> Mauro</label>
-                <label><input type="radio" name="respuesta5" value="D" data-text="Mauro" data-correct="false"> Mauro</label>
-            </div>
-        </div>
+        <div id="preguntas-container"></div> 
 
         <button type="submit">Enviar</button>
-        <button id="disableButton"  type="button">Siguiente pregunta</button>
+        <button id="disableButton" type="button">Siguiente pregunta</button>
     </form>
 
-    <!-- Resultados -->
     <div id="resultados" class="oculto" style="display: none;">
         <h2>Resultados</h2>
         <div id="resultado-respuestas"></div>
     </div>
 
-    <!-- Puntos de los usuarios -->
     <div id="puntos" style="display: none;"></div>
-
+  
+    
     <script src="script.js"></script>
+
 </body>
 </html>
