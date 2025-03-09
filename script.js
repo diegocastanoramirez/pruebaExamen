@@ -11,7 +11,7 @@ const firebaseConfig = {
 
 const app = firebase.initializeApp(firebaseConfig);
 const db = firebase.firestore();
-
+const auth = firebase.auth()
 let enviadoDesdeGuardar = 0;
 let timeLeft = 400;
 const timerElement = document.getElementById('timer');
@@ -35,6 +35,11 @@ puntosDiv.style.display = 'none';
 
 DivPreguntas.style.display = 'none';
 
+auth.onAuthStateChanged((user) => {
+    if (!user) {
+        window.location.href = "login.html"; // Redirige si el usuario no está autenticado
+    }
+});
 
 // Temporizador
 const interval = setInterval(() => {
