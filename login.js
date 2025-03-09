@@ -21,7 +21,7 @@ document.getElementById('login-form').addEventListener('submit', (e) => {
     auth.signInWithEmailAndPassword(email, password)
         .then((userCredential) => {
             alert("Inicio de sesión exitoso");
-            window.location.href = "index.html"; // Redirigir a la página principal
+            window.location.href = "formulario.html"; // Redirigir a la página principal
         })
         .catch((error) => {
             alert("Error: " + error.message);
