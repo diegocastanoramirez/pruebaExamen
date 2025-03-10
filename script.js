@@ -11,6 +11,7 @@ const firebaseConfig = {
 
 const app = firebase.initializeApp(firebaseConfig);
 const db = firebase.firestore();
+const auth = firebase.auth()
 
 let enviadoDesdeGuardar = 0;
 let timeLeft = 400;
@@ -44,6 +45,11 @@ DivPregunta4.style.display = 'none';
 DivPregunta5.style.display = 'none';
 
 
+auth.onAuthStateChanged((user) => {
+    if (!user) {
+        window.location.href = "login.html"; // Redirige si el usuario no está autenticado
+    }
+});
 // Temporizador
 const interval = setInterval(() => {
     timeLeft--;
