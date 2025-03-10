@@ -208,6 +208,7 @@ async function sendFormData() {
         data[`respuesta${index + 1}`] = respuesta.value;
         data[`respuesta${index + 1}_texto`] = respuesta.getAttribute('data-text');
         data[`respuesta${index + 1}_correcta`] = respuesta.getAttribute('data-correct') === "true";
+        data[`pregunta${index + 1}_texto`] = respuesta.getAttribute('data-preg');
     });
 
     try {
@@ -226,10 +227,14 @@ function mostrarResultados(data) {
 
     Object.keys(data).forEach((key) => {
         if (key.startsWith('respuesta') && key.includes('_texto')) {
-            const respuestaCorrecta = data[key.replace('_texto', '_correcta')];
+            const index = key.match(/\d+/)[0]; // Extrae el número de la respuesta
+            const preguntaTexto = data[`pregunta${index}_texto`]; // Recupera la pregunta
+            const respuestaCorrecta = data[`respuesta${index}_correcta`];
+
             respuestasHtml += `
                 <p>
-                    ${key.replace('_texto', '')}: ${data[key]} - 
+                    <strong>Pregunta:</strong> ${preguntaTexto} <br>
+                    <strong>Tu respuesta:</strong> ${data[key]} - 
                     <span class="${respuestaCorrecta ? 'correcta' : 'incorrecta'}">
                         ${respuestaCorrecta ? 'Correcta' : 'Incorrecta'}
                     </span>
@@ -363,7 +368,7 @@ button.disabled = true;
                     const opcionesHTML = respuestasAleatorias.map((respuesta) => {
                         const correcta = respuesta === pregunta.correcta ? "true" : "false";
                         return `<label>
-                                    <input type="radio" name="respuesta${index + 1}" value="${respuesta}" data-correct="${correcta}" data-text="${respuesta}">
+                                    <input type="radio" name="respuesta${index + 1}" value="${respuesta}" data-correct="${correcta}" data-text="${respuesta}" data-preg="${pregunta.pregunta}">
                                     ${respuesta}
                                 </label>`;
                     }).join("");
