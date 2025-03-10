@@ -349,6 +349,19 @@ button.disabled = true;
                 const contenedor = document.getElementById("preguntas-container");
                 contenedor.innerHTML = "";
             
+
+            // Función para mezclar el array aleatoriamente
+            function mezclarPreguntas(array) {
+                for (let i = array.length - 1; i > 0; i--) {
+                    const j = Math.floor(Math.random() * (i + 1));
+                    [array[i], array[j]] = [array[j], array[i]]; // Intercambiar elementos
+                }
+            }
+
+            // Mezclar las preguntas
+            mezclarPreguntas(preguntas);
+
+
                 preguntas.forEach((pregunta, index) => {
                     const div = document.createElement("div");
                     div.id = `Pregunta${index + 1}`;
