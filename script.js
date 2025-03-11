@@ -27,7 +27,8 @@ const button = document.getElementById('disableButton');
 
 const DivPreguntas = document.getElementById('preguntas-container');
 
-
+const correcto = document.getElementById('mensaje-correcto');
+const incorrecto = document.getElementById('mensaje-incorrecto');
 
 // Inicialmente ocultar los resultados y los puntos
 resultadosDiv.style.display = 'none';
@@ -149,6 +150,8 @@ form.addEventListener('submit', async (e) => {
 });
 button.addEventListener('click', () => {
     console.log('prueba');
+       incorrecto.style.display = 'none'
+          correcto.style.display = 'none'
 
     timeLeft = 400;
 
@@ -157,17 +160,37 @@ button.addEventListener('click', () => {
     if(contadorPreguntas==0){
         contadorPreguntas = contadorPreguntas+1
         DivPreguntas.style.display = 'block';
-
+  
         // quita el actual
         let id = `Pregunta${contadorPreguntas}`;   
         let DivPregunta = document.getElementById(id);
         DivPregunta.style.display = 'none';
 
+
+       const respuestas = document.querySelectorAll('input[type="radio"]:checked');
+       respuestas.forEach((respuesta, index) => {
+            // Obtener la respuesta correcta
+            const preguntaId = `Pregunta${index + 1}`;
+            const respuestaCorrecta = document.querySelector(`#${preguntaId} input[data-correct="true"]`);
+
+            // Comparar si la respuesta seleccionada es la correcta
+            if (respuesta.value === respuestaCorrecta.value &&  preguntaId ==id){
+                    correcto.style.display = 'block'
+            } else if( preguntaId ==id) {
+                    incorrecto.style.display = 'block'
+            }
+    });
+
+
+
+
+
+
         // pone el siguiente
         let id2 = `Pregunta${contadorPreguntas + 1}`;     
         let DivPregunta2 = document.getElementById(id2);
         DivPregunta2.style.display = 'block';
-       
+ 
     }else{
         
 
@@ -175,6 +198,26 @@ button.addEventListener('click', () => {
         let id = `Pregunta${contadorPreguntas + 1}`;   
         let DivPregunta = document.getElementById(id);
         DivPregunta.style.display = 'none';
+
+
+
+        const respuestas = document.querySelectorAll('input[type="radio"]:checked');
+            respuestas.forEach((respuesta, index) => {
+            // Obtener la respuesta correcta
+            const preguntaId = `Pregunta${index + 1}`;
+            const respuestaCorrecta = document.querySelector(`#${preguntaId} input[data-correct="true"]`);
+    
+            console.log(respuestaCorrecta.value)
+            console.log(respuesta.value )
+            // Comparar si la respuesta seleccionada es la correcta
+            if (respuesta.value === respuestaCorrecta.value &&  preguntaId ==id) {
+                    correcto.style.display = 'block'
+            } else if( preguntaId ==id){
+                    incorrecto.style.display = 'block'
+         }
+     });
+
+
 
         // pone el siguiente
         let id2 = `Pregunta${contadorPreguntas + 2}`;     
