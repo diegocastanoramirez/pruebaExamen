@@ -61,3 +61,11 @@ button {
     font-size: 20px; 
     display: none;
 }
+
+.slow-btn {
+    background-color: red;
+}
+
+.slow-btn:hover {
+    background-color: darkred;
+}

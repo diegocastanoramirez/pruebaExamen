@@ -43,7 +43,7 @@ auth.onAuthStateChanged((user) => {
 });
 
 
-function speak(text) {
+function speak(text,isSlow = false) {
     const synth = window.speechSynthesis;
 
     // Lista de palabras en español
@@ -58,6 +58,7 @@ function speak(text) {
     setTimeout(() => {
         const utterance = new SpeechSynthesisUtterance(text);
         utterance.lang = lang; // Configura el idioma
+        utterance.rate = isSlow ? 0.15 : 1; // Velocidad lenta o normal (1 es normal, 0.6 es más lenta)
 
         utterance.onend = () => synth.cancel(); // Evitar repeticiones
 
@@ -436,6 +437,7 @@ button.disabled = true;
                     div.id = `Pregunta${index + 1}`;
                     div.innerHTML = `<label>${index + 1}. ${pregunta.pregunta}
                                     <button type="button" class="speak-btn" data-text="${pregunta.pregunta}">🔊</button>
+                                    <button type="button" class="slow-btn" data-text="${pregunta.pregunta}">🔊</button>
                                     </label>`;
             
                     // Seleccionar 3 respuestas aleatorias de las 20 disponibles
@@ -455,6 +457,7 @@ button.disabled = true;
                                     <input type="radio" name="respuesta${index + 1}" value="${respuesta}" data-correct="${correcta}" data-text="${respuesta}" data-preg="${pregunta.pregunta}">
                                     ${respuesta}
                                     <button type="button" class="speak-btn" data-text="${respuesta}">🔊</button>
+                                    <button type="button" class="slow-btn" data-text="${respuesta}">🔊</button>
                                 </label>`;
                     }).join("");
 
@@ -472,6 +475,14 @@ button.disabled = true;
                             speak(text);
                         }
                     });
+
+                    // Delegación de eventos para todos los botones con clase "speak-btn"
+                    document.addEventListener("click", function(event) {
+                    if (event.target.classList.contains("slow-btn")) {
+                        const text = event.target.getAttribute("data-text"); // Obtener texto del atributo data-text
+                        speak(text,true);
+                    }
+                });
 
                 });
             
