@@ -42,6 +42,32 @@ auth.onAuthStateChanged((user) => {
     }
 });
 
+
+function speak(text) {
+    const synth = window.speechSynthesis;
+
+    // Lista de palabras en español
+    const palabrasEspanol =  ["comun", "cada", "decir", "respuestas", "vamos", "escuchar", "mirarObservar", "revisión", "acerca de", "hablar", "mirar", "semanalmente", "todos", "cómo", "diversión", "ha sido", "viajeRecorrido", "genialExelente", "doce", "trece", "veinte", "treinta", "vocales", "lunes", "martes", "miércoles", "jueves", "viernes", "sábado", "domingo", "grabar", "muy bien", "chicos", "emocionado", "nos tuvo tenido", "yendo"];
+
+    // Determinar idioma
+    const lang = palabrasEspanol.includes(text.toLowerCase()) ? "es-ES" : "en-US";
+
+    // Cancelar cualquier audio en curso
+    synth.cancel();
+
+    setTimeout(() => {
+        const utterance = new SpeechSynthesisUtterance(text);
+        utterance.lang = lang; // Configura el idioma
+
+        utterance.onend = () => synth.cancel(); // Evitar repeticiones
+
+        synth.speak(utterance);
+    }, 100);
+}
+
+
+
+
 // Temporizador
 const interval = setInterval(() => {
     timeLeft--;
@@ -404,11 +430,13 @@ button.disabled = true;
             // Mezclar las preguntas
             mezclarPreguntas(preguntas);
 
-
+            
                 preguntas.forEach((pregunta, index) => {
                     const div = document.createElement("div");
                     div.id = `Pregunta${index + 1}`;
-                    div.innerHTML = `<label>${index + 1}. ${pregunta.pregunta}</label>`;
+                    div.innerHTML = `<label>${index + 1}. ${pregunta.pregunta}
+                                    <button type="button" class="speak-btn" data-text="${pregunta.pregunta}">🔊</button>
+                                    </label>`;
             
                     // Seleccionar 3 respuestas aleatorias de las 20 disponibles
                     let respuestasAleatorias = [...pregunta.respuestas]
@@ -426,24 +454,37 @@ button.disabled = true;
                         return `<label>
                                     <input type="radio" name="respuesta${index + 1}" value="${respuesta}" data-correct="${correcta}" data-text="${respuesta}" data-preg="${pregunta.pregunta}">
                                     ${respuesta}
+                                    <button type="button" class="speak-btn" data-text="${respuesta}">🔊</button>
                                 </label>`;
                     }).join("");
-            
+
+      
+
                     // Agregar las opciones al div de la pregunta
                     div.innerHTML += `<div class="radio-group">${opcionesHTML}</div>`;
                     contenedor.appendChild(div);
+
+  
+                    // Delegación de eventos para todos los botones con clase "speak-btn"
+                    document.addEventListener("click", function(event) {
+                        if (event.target.classList.contains("speak-btn")) {
+                            const text = event.target.getAttribute("data-text"); // Obtener texto del atributo data-text
+                            speak(text);
+                        }
+                    });
+
                 });
             
                 blockPreguntas();
             }
             
-            // Función para mezclar un array
-            function mezclarArray(array) {
-                return array.sort(() => Math.random() - 0.5);
-            }
-            
-            generarPreguntas();
-        });
+     // Función para mezclar un array
+     function mezclarArray(array) {
+        return array.sort(() => Math.random() - 0.5);
+    }
+    
+    generarPreguntas();
+});
 
 
 
