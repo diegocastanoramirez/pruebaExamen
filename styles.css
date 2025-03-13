@@ -69,3 +69,7 @@ button {
 .slow-btn:hover {
     background-color: darkred;
 }
+
+#desh {
+    display: none;
+}
